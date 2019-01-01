@@ -171,8 +171,8 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
 			epoch_acc = running_corrects.double() / dataset_sizes[phase]
 			epoch_acc1 = np.mean(acc1_list)
 
-			print('Epoch {} [{}]: loss={:.4f}, acc={:.4f}, top1={:.4f}, top6={:.4f}' .
-				format(epoch, phase, epoch_loss, epoch_acc, epoch_acc1, epoch_acc6))
+			print('Epoch {} [{}]: loss={:.4f}, acc={:.4f}, top1={:.4f}' .
+				format(epoch, phase, epoch_loss, epoch_acc, epoch_acc1))
 
 			# deep copy the model
 			if phase == 'valid' and epoch_acc > best_acc:
