@@ -223,7 +223,7 @@ if __name__ == '__main__':
 	device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 	#device = torch.device("cpu")
 	model = model.to(device)
-	model.cuda()
+	model = model.cuda()
 
 	# Print model's state_dict
 	print("Model's state_dict:")
