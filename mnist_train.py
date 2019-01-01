@@ -101,12 +101,11 @@ class TheModelClass(nn.Module):  # Net
 		self.fc2 = nn.Linear(500, 10)
 
 	def forward(self, x):
-		#x = F.relu(nn.Conv2d(1, 20, 5, 1)(x))
-		x = conv(x, f1=1, f2=8, k=4)
+		x = F.relu(nn.Conv2d(1, 20, 5, 1)(x))
+		#x = conv(x, f1=1, f2=8, k=4)
 		x = F.max_pool2d(x, 2, 2)
-		#x = F.relu(nn.Conv2d(20, 50, 5, 1)(x))
-		x = conv(x, f1=8, f2=50,  k=4)
-		#x = conv(x, f1=50, f2=50, k=5)
+		x = F.relu(nn.Conv2d(20, 50, 5, 1)(x))
+		#x = conv(x, f1=8, f2=50,  k=4)
 		x = F.max_pool2d(x, 2, 2)
 		x = x.view(-1, 4*4*50)
 		x = F.relu(nn.Linear(4*4*50, 500)(x))
@@ -223,7 +222,7 @@ if __name__ == '__main__':
 	device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 	#device = torch.device("cpu")
 	model = model.to(device)
-	model = model.cuda()
+	#model = model.cuda()
 
 	# Print model's state_dict
 	print("Model's state_dict:")
