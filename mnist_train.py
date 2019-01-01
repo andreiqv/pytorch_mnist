@@ -70,6 +70,7 @@ class TheModelClass(nn.Module):
 		return x
 """
 
+"""
 class TheModelClass(nn.Module):  # Net
 	def __init__(self):
 		super(TheModelClass, self).__init__()
@@ -87,6 +88,29 @@ class TheModelClass(nn.Module):  # Net
 		x = F.relu(self.fc1(x))
 		x = self.fc2(x)
 		return F.log_softmax(x, dim=1)
+"""
+
+conv = lambda x, f1, f2, k, s=1, p=0: F.relu(nn.Conv2d(f1, f2, k, s)(x))
+
+class TheModelClass(nn.Module):  # Net
+	def __init__(self):
+		super(TheModelClass, self).__init__()
+		self.conv1 = nn.Conv2d(1, 20, 5, 1)
+		self.conv2 = nn.Conv2d(20, 50, 5, 1)
+		self.fc1 = nn.Linear(4*4*50, 500)
+		self.fc2 = nn.Linear(500, 10)
+
+	def forward(self, x):
+		#x = F.relu(nn.Conv2d(1, 20, 5, 1)(x))
+		x = conv(x, f1=1, f2=20, k=5)
+		x = F.max_pool2d(x, 2, 2)
+		#x = F.relu(nn.Conv2d(20, 50, 5, 1)(x))
+		x = conv(x, f1=20, f2=50, k=5)
+		x = F.max_pool2d(x, 2, 2)
+		x = x.view(-1, 4*4*50)
+		x = F.relu(nn.Linear(4*4*50, 500)(x))
+		x = nn.Linear(500, 10)(x)
+		return F.log_softmax(x, dim=1)		
 
 
 def accuracy_top1(outputs, labels):
