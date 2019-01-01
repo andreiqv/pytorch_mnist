@@ -17,7 +17,7 @@ DEBUG = False
 # Hyperparameters
 num_epochs = 5
 num_classes = 10
-batch_size = 64
+batch_size = 256
 learning_rate = 0.001
 
 # Dataset
@@ -36,7 +36,7 @@ mnist_datasets['train'] = torchvision.datasets.MNIST(root=DATA_PATH, train=True,
 mnist_datasets['valid'] = torchvision.datasets.MNIST(root=DATA_PATH, train=False, transform=trans, download=True)
 
 dataloaders = {p: DataLoader(mnist_datasets[p], batch_size=batch_size,
-		shuffle=True, num_workers=1) for p in data_parts}
+		shuffle=True, num_workers=4) for p in data_parts}
 
 dataset_sizes = {p: len(mnist_datasets[p]) for p in data_parts}
 num_batch = dict()
