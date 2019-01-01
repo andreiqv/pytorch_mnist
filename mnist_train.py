@@ -30,10 +30,10 @@ trans = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.1307,
 # MNIST dataset
 data_parts = ['train', 'valid']
 mnist_datasets = dict()
-mnist_datasets['train'] = torchvision.datasets.MNIST(root=DATA_PATH, train=True, transform=trans, download=True)
-mnist_datasets['valid'] = torchvision.datasets.MNIST(root=DATA_PATH, train=False, transform=trans, download=True)
-#train_dataset = torchvision.datasets.MNIST(root=DATA_PATH, train=True, transform=trans, download=False)
-#test_dataset = torchvision.datasets.MNIST(root=DATA_PATH, train=False, transform=trans, download=False)
+mnist_datasets['train'] = torchvision.datasets.MNIST(root=DATA_PATH, train=True, transform=trans, download=False)
+mnist_datasets['valid'] = torchvision.datasets.MNIST(root=DATA_PATH, train=False, transform=trans, download=False)
+#mnist_datasets['train'] = torchvision.datasets.MNIST(root=DATA_PATH, train=True, transform=trans, download=True)
+#mnist_datasets['valid'] = torchvision.datasets.MNIST(root=DATA_PATH, train=False, transform=trans, download=True)
 
 dataloaders = {p: DataLoader(mnist_datasets[p], batch_size=batch_size,
 		shuffle=True, num_workers=1) for p in data_parts}
