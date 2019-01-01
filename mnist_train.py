@@ -17,7 +17,7 @@ DEBUG = False
 # Hyperparameters
 num_epochs = 5
 num_classes = 10
-batch_size = 256
+batch_size = 64
 learning_rate = 0.001
 
 # Dataset
@@ -30,10 +30,10 @@ trans = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.1307,
 # MNIST dataset
 data_parts = ['train', 'valid']
 mnist_datasets = dict()
-mnist_datasets['train'] = torchvision.datasets.MNIST(root=DATA_PATH, train=True, transform=trans, download=False)
-mnist_datasets['valid'] = torchvision.datasets.MNIST(root=DATA_PATH, train=False, transform=trans, download=False)
-#mnist_datasets['train'] = torchvision.datasets.MNIST(root=DATA_PATH, train=True, transform=trans, download=True)
-#mnist_datasets['valid'] = torchvision.datasets.MNIST(root=DATA_PATH, train=False, transform=trans, download=True)
+#mnist_datasets['train'] = torchvision.datasets.MNIST(root=DATA_PATH, train=True, transform=trans, download=False)
+#mnist_datasets['valid'] = torchvision.datasets.MNIST(root=DATA_PATH, train=False, transform=trans, download=False)
+mnist_datasets['train'] = torchvision.datasets.MNIST(root=DATA_PATH, train=True, transform=trans, download=True)
+mnist_datasets['valid'] = torchvision.datasets.MNIST(root=DATA_PATH, train=False, transform=trans, download=True)
 
 dataloaders = {p: DataLoader(mnist_datasets[p], batch_size=batch_size,
 		shuffle=True, num_workers=1) for p in data_parts}
@@ -102,10 +102,11 @@ class TheModelClass(nn.Module):  # Net
 
 	def forward(self, x):
 		#x = F.relu(nn.Conv2d(1, 20, 5, 1)(x))
-		x = conv(x, f1=1, f2=20, k=5)
+		x = conv(x, f1=1, f2=8, k=4)
 		x = F.max_pool2d(x, 2, 2)
 		#x = F.relu(nn.Conv2d(20, 50, 5, 1)(x))
-		x = conv(x, f1=20, f2=50, k=5)
+		x = conv(x, f1=8, f2=50,  k=4)
+		#x = conv(x, f1=50, f2=50, k=5)
 		x = F.max_pool2d(x, 2, 2)
 		x = x.view(-1, 4*4*50)
 		x = F.relu(nn.Linear(4*4*50, 500)(x))
@@ -205,9 +206,9 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
 
 		print()
 
-	time_elapsed = time.time() - since
-	print('Training complete in {:.0f}m {:.0f}s'.format(
-		time_elapsed // 60, time_elapsed % 60))
+	#time_elapsed = time.time() - since
+	#print('Training complete in {:.0f}m {:.0f}s'.format(
+	#	time_elapsed // 60, time_elapsed % 60))
 	print('Best val Acc: {:4f}'.format(best_acc))
 
 	# load best model weights
