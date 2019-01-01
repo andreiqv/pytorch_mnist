@@ -90,7 +90,7 @@ class TheModelClass(nn.Module):  # Net
 		return F.log_softmax(x, dim=1)
 """
 
-conv = lambda x, f1, f2, k, s=1, p=0: F.relu(nn.Conv2d(f1, f2, k, s)(x))
+#conv = lambda x, f1, f2, k, s=1, p=0: F.relu(nn.Conv2d(f1, f2, k, s)(x))
 
 class TheModelClass(nn.Module):  # Net
 	def __init__(self):
