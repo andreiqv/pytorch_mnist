@@ -116,8 +116,8 @@ class TheModelClass(nn.Module):  # Net
 		"""
 
 		x = x.view(-1, 28*28)
-		x = F.relu(nn.Linear(28*28, 100)(x))
-		x = nn.Linear(100, 10)(x)
+		x = F.relu(nn.Linear(28*28, 1000)(x))
+		x = nn.Linear(1000, 10)(x)
 		return F.log_softmax(x, dim=1)		
 
 
