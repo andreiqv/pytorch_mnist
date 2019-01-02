@@ -90,7 +90,7 @@ class TheModelClass(nn.Module):  # Net
 		return F.log_softmax(x, dim=1)
 """
 
-#conv = lambda x, f1, f2, k, s=1, p=0: F.relu(nn.Conv2d(f1, f2, k, s)(x))
+conv = lambda x, f1, f2, k, s=1, p=0: F.relu(nn.Conv2d(f1, f2, k, s)(x))
 
 class TheModelClass(nn.Module):  # Net
 	def __init__(self):
@@ -228,9 +228,8 @@ if __name__ == '__main__':
 	# Initialize model
 	model = TheModelClass()
 	device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-	#device = torch.device("cpu")
+	device = torch.device("cpu")
 	model = model.to(device)
-	#model = model.cuda()
 
 	# Print model's state_dict
 	print("Model's state_dict:")
