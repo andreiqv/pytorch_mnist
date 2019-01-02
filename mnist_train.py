@@ -118,7 +118,7 @@ class NeuralNetworkModel(nn.Module):  # Net
 		"""
 
 		x = conv(x, f1=1, f2=8, k=4)
-		x = F.max_pool2d(x, 4)
+		x = F.max_pool2d(x, 2)
 		x = x.view(-1, 7*7*8)
 		x = F.relu(nn.Linear(7*7*8, 1000)(x))
 		x = F.log_softmax(nn.Linear(1000, 10)(x))
