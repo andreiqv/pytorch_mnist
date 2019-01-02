@@ -92,9 +92,11 @@ class TheModelClass(nn.Module):  # Net
 
 conv = lambda x, f1, f2, k, s=1, p=0: F.relu(nn.Conv2d(f1, f2, k, s)(x))
 
-class TheModelClass(nn.Module):  # Net
+class NeuralNetworkModel(nn.Module):  # Net
+
 	def __init__(self):
-		super(TheModelClass, self).__init__()
+
+		super(NeuralNetworkModel, self).__init__()
 		self.conv1 = nn.Conv2d(1, 20, 5, 1)
 		self.conv2 = nn.Conv2d(20, 50, 5, 1)
 		self.fc1 = nn.Linear(4*4*50, 500)
@@ -115,10 +117,16 @@ class TheModelClass(nn.Module):  # Net
 		return F.log_softmax(x, dim=1)
 		"""
 
-		x = x.view(-1, 28*28)
-		x = F.relu(nn.Linear(28*28, 1000)(x))
-		x = nn.Linear(1000, 10)(x)
-		return F.log_softmax(x, dim=1)		
+		x = conv(x, f1=1, f2=8, k=4)
+		x = F.max_pool2d(x, 4, 4)
+		x = x.view(-1, 7*7*8)
+		x = F.relu(nn.Linear(7*7*8, 1000)(x))
+		x = F.log_softmax(nn.Linear(1000, 10)(x))
+
+		#x = x.view(-1, 28*28)
+		#x = F.relu(nn.Linear(28*28, 1000)(x))
+		#x = F.log_softmax(nn.Linear(1000, 10)(x))
+		return x
 
 
 def accuracy_top1(outputs, labels):
@@ -226,7 +234,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
 if __name__ == '__main__':
 
 	# Initialize model
-	model = TheModelClass()
+	model = NeuralNetworkModel()
 	device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 	device = torch.device("cpu")
 	model = model.to(device)
