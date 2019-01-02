@@ -101,15 +101,23 @@ class TheModelClass(nn.Module):  # Net
 		self.fc2 = nn.Linear(500, 10)
 
 	def forward(self, x):
+		"""
 		x = F.relu(nn.Conv2d(1, 20, 5, 1)(x))
 		#x = conv(x, f1=1, f2=8, k=4)
 		x = F.max_pool2d(x, 2, 2)
+		x = nn.BatchNorm2d(20)(x)
 		x = F.relu(nn.Conv2d(20, 50, 5, 1)(x))
 		#x = conv(x, f1=8, f2=50,  k=4)
 		x = F.max_pool2d(x, 2, 2)
 		x = x.view(-1, 4*4*50)
 		x = F.relu(nn.Linear(4*4*50, 500)(x))
 		x = nn.Linear(500, 10)(x)
+		return F.log_softmax(x, dim=1)
+		"""
+
+		x = x.view(-1, 28*28)
+		x = F.relu(nn.Linear(28*28, 100)(x))
+		x = nn.Linear(100, 10)(x)
 		return F.log_softmax(x, dim=1)		
 
 
